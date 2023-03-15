@@ -3,12 +3,7 @@
     <body>
         <nav>
             <ul>
-                <li><a href="{{ url_for('index') }}">Home</a></li>
-                {% if user or admin %}
-                <li><a href="{{ url_for('logout') }}">Logout</a></li>
-                {% else %}
-                <li><a href="{{ url_for('login') }}">Login</a></li>
-                {% endif %}
+                <li><a href="{{ url_for('main.index') }}">Home</a></li>
                 {% block li %} {% endblock %}
             </ul>
         </nav>

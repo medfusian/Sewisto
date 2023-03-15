@@ -7,7 +7,7 @@ from . import user_bp
 def add_user():
     # Проверяем, что пользователь аутентифицирован как администратор
     if 'admin_id' not in session:
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
 
     if request.method == 'POST':
         id = request.form['id']
@@ -30,7 +30,7 @@ def add_user():
 def admin_users():
     # Проверяем, что пользователь аутентифицирован как администратор
     if 'admin_id' not in session:
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
 
     g.cursor.execute("SELECT * FROM public.user")
     users = g.cursor.fetchall()
@@ -47,7 +47,7 @@ def edit_user(user_id):
 
     # Проверяем, что пользователь аутентифицирован как администратор
     if 'admin_id' not in session:
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
 
     # Если товар не найден, возвращаем ошибку 404
     if not user:

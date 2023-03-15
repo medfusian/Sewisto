@@ -6,7 +6,7 @@ from . import admin_bp
 def admin_panel():
     # Проверяем, что пользователь аутентифицирован как администратор
     if 'admin_id' not in session:
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
     admin = True
     return render_template('admin/admin.html', admin=admin)
 

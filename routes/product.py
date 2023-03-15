@@ -7,7 +7,7 @@ from . import product_bp
 def add_product():
     # Проверяем, что пользователь аутентифицирован как администратор
     if 'admin_id' not in session:
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
 
     if request.method == 'POST':
         article = request.form['article']
@@ -34,7 +34,7 @@ def add_product():
 def admin_products():
     # Проверяем, что пользователь аутентифицирован как администратор
     if 'admin_id' not in session:
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
 
     g.cursor.execute("SELECT * FROM product")
     products = g.cursor.fetchall()
@@ -51,7 +51,7 @@ def edit_product(product_id):
 
     # Проверяем, что пользователь аутентифицирован как администратор
     if 'admin_id' not in session:
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
 
     # Если товар не найден, возвращаем ошибку 404
     if not product:
@@ -86,7 +86,7 @@ def edit_product(product_id):
 def delete_product(product_id):
     # Проверяем, что пользователь аутентифицирован как администратор
     if 'admin_id' not in session:
-        return redirect(url_for('login'))
+        return redirect(url_for('auth.login'))
 
     try:
         # Удаляем товар из таблицы product
