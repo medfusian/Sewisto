@@ -94,7 +94,7 @@
                                 <li>
                                     {% if current_user or admin %}
                                     {% if admin %}
-                                    <a href="{{ url_for('admin_panel') }}">Admin panel</a>
+                                    <a href="{{ url_for('admin.admin_panel') }}">Admin panel</a>
                                     {% elif user %}
                                     <span>{{ user }}</span>
                                     {% else %}
