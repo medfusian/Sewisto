@@ -1,0 +1,36 @@
+{% extends 'admin/baseadmin.html' %}
+
+{% block li %}
+<li><a href="{{ url_for('admin_panel') }}">Admin Panel</a></li>
+{% endblock %}
+
+{% block content %}
+    <h1>Список пользователей</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Почта</th>
+                <th>Пароль</th>
+                <th>Логин</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user[0] }}</td>
+                    <td>{{ user[1] }}</td>
+                    <td>{{ user[2] }}</td>
+                    <td>{{ user[3] }}</td>
+                    <td><a href="/admin/edit_user/{{ user[0] }}">Редактировать</a></td>
+                    <td>
+                        <form action="/admin/delete_user/{{ user[0] }}" method="POST">
+                            <input type="hidden" name="method" value="DELETE">
+                            <button type="submit">Удалить пользователя</button>
+                        </form>
+                    </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <p><a href="{{ url_for('add_user') }}">Добавить пользователя</a></p>
+{% endblock %}

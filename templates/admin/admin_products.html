@@ -1,4 +1,8 @@
-{% extends 'baseadmin.html' %}
+{% extends 'admin/baseadmin.html' %}
+
+{% block li %}
+<li><a href="{{ url_for('admin_panel') }}">Admin Panel</a></li>
+{% endblock %}
 
 {% block content %}
     <h1>Список товаров</h1>

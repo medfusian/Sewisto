@@ -95,12 +95,12 @@ def login():
 
         flash('Email or password is incorrect')
 
-    return render_template('login.html')
+    return render_template('auth/login.html')
 
 
 @app.route('/password')
 def password():
-    return render_template('password.html')
+    return render_template('auth/password.html')
 
 
 @app.route('/logout')
@@ -124,7 +124,10 @@ def admin_panel():
 
     admin = True
 
-    return render_template('admin.html', products=products, admin=admin)
+    return render_template('admin/admin.html', products=products, admin=admin)
+
+
+
 
 
 @app.route('/admin/add_product', methods=['GET', 'POST'])
@@ -149,9 +152,9 @@ def add_product():
                          (article, name, description, category, supplier, season, color, price))
 
         flash('Product added successfully')
-        return redirect(url_for('admin_panel'))
+        return redirect(url_for('admin_products'))
 
-    return render_template('add_product.html')
+    return render_template('admin/add_product.html')
 
 
 @app.route('/admin/products')
@@ -162,7 +165,7 @@ def admin_products():
 
     g.cursor.execute("SELECT * FROM product")
     products = g.cursor.fetchall()
-    return render_template('admin_products.html', products=products)
+    return render_template('admin/admin_products.html', products=products)
 
 
 @app.route('/admin/edit_product/<int:product_id>', methods=['GET', 'POST'])
@@ -184,7 +187,7 @@ def edit_product(product_id):
     # Обработка GET запроса
     if request.method == 'GET':
         # Отображаем форму для редактирования товара
-        return render_template('edit_product.html', product=product)
+        return render_template('admin/edit_product.html', product=product)
 
     # Обработка POST запроса
     if request.method == 'POST':
@@ -202,7 +205,7 @@ def edit_product(product_id):
                 'UPDATE product SET article=%s, name=%s, description=%s, category=%s, supplier=%s, season=%s, color=%s, price=%s WHERE article=%s',
                 (article, name, description, category, supplier, season, color, price, product_id))
 
-        # Перенаправляем пользователя на страницу с информацией о товаре
+        # Перенаправляем пользователя на страницу с товарами
         return redirect(url_for('admin_products'))
 
 
@@ -218,13 +221,109 @@ def delete_product(product_id):
 
         # Возвращаемся на страницу со списком товаров
         flash('Товар успешно удален', 'success')
-        return redirect(url_for('admin_panel'))
+        return redirect(url_for('admin_products'))
 
     except:
         # В случае ошибки откатываем изменения
         g.connect.rollback()
         flash('Ошибка удаления товара', 'error')
-        return redirect(url_for('admin_panel'))
+        return redirect(url_for('admin_products'))
+
+
+
+@app.route('/admin/add_user', methods=['GET', 'POST'])
+def add_user():
+    # Проверяем, что пользователь аутентифицирован как администратор
+    if 'admin_id' not in session:
+        return redirect(url_for('login'))
+
+    if request.method == 'POST':
+        id = request.form['id']
+        email = request.form['email']
+        password = request.form['password']
+        login = request.form['login']
+
+        # Добавляем новый продукт в таблицу "product"
+        g.cursor.execute("INSERT INTO public.user (id, email, password, login)"
+                         "VALUES (%s, %s, %s, %s)",
+                         (id, email, password, login))
+
+        flash('User added successfully')
+        return redirect(url_for('admin_users'))
+
+    return render_template('admin/add_user.html')
+
+
+@app.route('/admin/users')
+def admin_users():
+    # Проверяем, что пользователь аутентифицирован как администратор
+    if 'admin_id' not in session:
+        return redirect(url_for('login'))
+
+    g.cursor.execute("SELECT * FROM public.user")
+    users = g.cursor.fetchall()
+    return render_template('admin/admin_users.html', users=users)
+
+
+@app.route('/admin/edit_user/<int:user_id>', methods=['GET', 'POST'])
+def edit_user(user_id):
+    # Получаем пользователя по его идентификатору
+    g.cursor.close()
+    with g.connect.cursor(cursor_factory=psycopg2.extras.DictCursor) as cursor:
+        cursor.execute('SELECT * FROM public.user WHERE id = %s', (user_id,))
+        user = cursor.fetchone()
+
+    # Проверяем, что пользователь аутентифицирован как администратор
+    if 'admin_id' not in session:
+        return redirect(url_for('login'))
+
+    # Если товар не найден, возвращаем ошибку 404
+    if not user:
+        abort(404)
+
+    # Обработка GET запроса
+    if request.method == 'GET':
+        # Отображаем форму для редактирования товара
+        return render_template('admin/edit_user.html', user=user)
+
+    # Обработка POST запроса
+    if request.method == 'POST':
+        # Обновляем информацию о товаре в базе данных
+        id = request.form['id']
+        email = request.form['email']
+        password = request.form['password']
+        login = request.form['login']
+        with g.connect.cursor() as cursor:
+            cursor.execute(
+                'UPDATE public.user SET id=%s, email=%s, password=%s, login=%s WHERE id=%s',
+                (id, email, password, login, user_id))
+
+        # Перенаправляем пользователя на страницу с информацией о товаре
+        return redirect(url_for('admin_users'))
+
+
+@app.route('/admin/delete_user/<int:user_id>', methods=['POST'])
+def delete_user(user_id):
+    # Проверяем, что пользователь аутентифицирован как администратор
+    if 'admin_id' not in session:
+        return redirect(url_for('login'))
+
+    try:
+        # Удаляем пользователя из таблицы user
+        g.cursor.execute("DELETE FROM public.user WHERE id=%s", (user_id,))
+
+        # Возвращаемся на страницу со списком пользователей
+        flash('Пользователь успешно удален', 'success')
+        return redirect(url_for('admin_users'))
+
+    except:
+        # В случае ошибки откатываем изменения
+        g.connect.rollback()
+        flash('Ошибка удаления пользователя', 'error')
+        return redirect(url_for('admin_users'))
+
+
+
 
 
 if __name__ == "__main__":
