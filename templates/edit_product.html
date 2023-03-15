@@ -1,0 +1,25 @@
+{% extends 'baseadmin.html' %}
+
+{% block content %}
+<h1>Edit Product</h1>
+
+<form method="POST">
+  <label for="article">Article</label>
+  <input type="text" name="article" value="{{ product.article }}"><br><br>
+  <label for="name">Name</label>
+  <input type="text" name="name" value="{{ product.name }}"><br><br>
+  <label for="description">Description</label>
+  <textarea name="description">{{ product.description }}</textarea><br><br>
+  <label for="category">Category</label>
+  <input type="text" name="category" value="{{ product.category }}"><br><br>
+  <label for="supplier">Supplier</label>
+  <input type="text" name="supplier" value="{{ product.supplier }}"><br><br>
+  <label for="season">Season</label>
+  <input type="text" name="season" value="{{ product.season }}"><br><br>
+  <label for="color">Color</label>
+  <input type="text" name="color" value="{{ product.color }}"><br><br>
+  <label for="price">Price</label>
+  <input type="text" name="price" value="{{ product.price }}"><br><br>
+  <input type="submit" value="Save">
+</form>
+{% endblock %}

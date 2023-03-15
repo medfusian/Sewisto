@@ -1,0 +1,28 @@
+{% extends 'baseadmin.html' %}
+
+{% block content %}
+<h1>Admin Panel</h1>
+
+<p><a href="{{ url_for('admin_products') }}">Products</a></p>
+
+<!--<table>-->
+<!--    <thead>-->
+<!--        <tr>-->
+<!--            <th>ID</th>-->
+<!--            <th>Name</th>-->
+<!--            <th>Description</th>-->
+<!--            <th>Price</th>-->
+<!--        </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--        {% for product in products %}-->
+<!--        <tr>-->
+<!--            <td>{{ product[0] }}</td>-->
+<!--            <td>{{ product[1] }}</td>-->
+<!--            <td>{{ product[2] }}</td>-->
+<!--            <td>{{ product[3] }}</td>-->
+<!--        </tr>-->
+<!--        {% endfor %}-->
+<!--    </tbody>-->
+<!--</table>-->
+{% endblock %}

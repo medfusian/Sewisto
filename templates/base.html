@@ -7,7 +7,7 @@
     <meta name="description" content=""/>
 <!--    <meta name="generator" content="Drupal 7 (https://www.drupal.org)"/>-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    {% block title %} {% endblock %}
+    <title> {% block title %} {% endblock %} </title>
     <link rel="stylesheet"
           href="../static/sites/default/files/css/css_xE-rWrJf-fncB6ztZfd2huxqgxu4WO-qwma6Xer30m4.css"/>
     <link rel="stylesheet"
@@ -71,7 +71,7 @@
 
 
                     <div class="block-content">
-                        <a href="index.html" class="site-logo">Sewisto</a></div>
+                        <a href="/" class="site-logo">Sewisto</a></div>
 
                 </div> <!-- /.block -->
             </div>
@@ -79,7 +79,7 @@
             <div class="region region-header-second-middle">
                 <div id="block-system-main-menu" class="block block-system block-menu">
 
-                    {% block content %}{% endblock %}
+                    {% include 'navbar.html' %}
 
                 </div> <!-- /.block -->
             </div>
@@ -92,7 +92,22 @@
                         <nav class="navigation">
                             <ul class="menu user-menu">
                                 <li>
-                                    <a href="../static/user/login.html">Войти</a>
+                                    {% if current_user or admin %}
+                                    {% if admin %}
+                                    <a href="{{ url_for('admin_panel') }}">Admin panel</a>
+                                    {% elif user %}
+                                    <span>{{ user }}</span>
+                                    {% else %}
+                                    <span>{{ current_user }}</span>
+                                    {% endif %}
+                                    {% else %}
+                                    <a href="{{ url_for('login') }}">Войти</a>
+                                    {% endif %}
+
+<!--                                    <a href="/login">Войти</a>-->
+<!--                                    {% if admin %}-->
+<!--                                    <a href="/add_product">Add Product</a>-->
+<!--                                    {% endif %}-->
                                 </li>
                             </ul>
                         </nav>
@@ -227,7 +242,7 @@
         </div> <!-- /.block -->
         <div id="block-multiblock-1" class="block block-multiblock block-system block-system-main-menu-instance">
 
-            {% block content2 %}{% endblock %}
+            {% include 'navbar.html' %}
 
         </div> <!-- /.block -->
     </div>
