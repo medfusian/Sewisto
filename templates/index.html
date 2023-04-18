@@ -168,17 +168,19 @@
 
                                     <div class="view-content">
                                         <div class="product-list grid grid-cols-2 grid-cols-md-3 grid-cols-lg-4 grid-cols-xl-5 grid-g-1 grid-g-xl-2">
+
+                                            {% for product in products[:10] %}
+
                                             <div class="product-list-item">
 
                                                 <div class="product-list-item__image"><a
-                                                        href="catalog/bifleks/bifleks-printovannyy/bifleks-leo-2023-6980.html">
-                                                    <img src="../static/sites/default/files/styles/thumbnail/public/bifleks-leo-3310-1471396728eeac.jpg?itok=8tYt0Gg0"
-                                                         alt="Бифлекс Лео 2023">
+                                                        href="">
+                                                    <img src="{{ url_for('product.get_image', product_id=product[0]) }}"
+                                                         alt="{{ product[1] }}">
                                                 </a></div>
                                                 <div class="product-list-item__title"><a
-                                                        href="catalog/bifleks/bifleks-printovannyy/bifleks-leo-2023-6980.html">Бифлекс
-                                                    Лео 2023</a></div>
-                                                Цена: <span class="product-list-item__price">33.00 руб.</span>
+                                                        href="">{{ product[1] }}</a></div>
+                                                Цена: <span class="product-list-item__price">{{ product[7] }}$</span>
                                                 <div class="product-list-item__add-to-cart">
                                                     <form class="commerce-add-to-cart commerce-cart-add-to-cart-form-3310"
                                                           autocomplete="off" action="https://megatkani.by/" method="post"
@@ -195,258 +197,9 @@
                                                     </form>
                                                 </div>
                                             </div>
-                                            <div class="product-list-item">
 
-                                                <div class="product-list-item__image"><a
-                                                        href="catalog/hlopok/shite/hlopok-shite-rozovaya-fuksiya-6977.html">
-                                                    <img src="../static/sites/default/files/styles/thumbnail/public/hlopok-shite-rozovaya-fuksiya-3307-3462126432f17.jpg?itok=HZxfpnB7"
-                                                         alt="Хлопок шитье розовая фуксия ">
-                                                </a></div>
-                                                <div class="product-list-item__title"><a
-                                                        href="catalog/hlopok/shite/hlopok-shite-rozovaya-fuksiya-6977.html">Хлопок
-                                                    шитье розовая фуксия </a></div>
-                                                Цена: <span class="product-list-item__price">25.00 руб.</span>
-                                                <div class="product-list-item__add-to-cart">
-                                                    <form class="commerce-add-to-cart commerce-cart-add-to-cart-form-3307"
-                                                          autocomplete="off" action="https://megatkani.by/" method="post"
-                                                          id="commerce-cart-add-to-cart-form-3307" accept-charset="UTF-8">
-                                                        <div><input type="hidden" name="product_id" value="3307"/>
-                                                            <input type="hidden" name="form_build_id"
-                                                                   value="form-Xu8WNRmR6djY2GkygX9ib9FhMaEacC_oKySixO1H97k"/>
-                                                            <input type="hidden" name="form_id"
-                                                                   value="commerce_cart_add_to_cart_form_3307"/>
-                                                            <div id="edit-line-item-fields--2" class="form-wrapper"></div>
-                                                            <input type="hidden" name="quantity" value="1"/>
-                                                            <input type="submit" id="edit-submit--2"
-                                                                   value="Добавить в корзину" name="op"
-                                                                   class="form-submit"/></div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div class="product-list-item">
+                                            {% endfor %}
 
-                                                <div class="product-list-item__image"><a
-                                                        href="catalog/armani-shelk/shelk-armani-kletka-bezhevyy-6974.html">
-                                                    <img src="../static/sites/default/files/styles/thumbnail/public/shelk-armani-kletka-bezhevyy-3304-1440805197c69b.jpg?itok=LNmnC3oI"
-                                                         alt="Шелк Армани клетка бежевый ">
-                                                </a></div>
-                                                <div class="product-list-item__title"><a
-                                                        href="catalog/armani-shelk/shelk-armani-kletka-bezhevyy-6974.html">Шелк
-                                                    Армани клетка бежевый </a></div>
-                                                Цена: <span class="product-list-item__price">23.00 руб.</span>
-                                                <div class="product-list-item__add-to-cart">
-                                                    <form class="commerce-add-to-cart commerce-cart-add-to-cart-form-3304"
-                                                          autocomplete="off" action="https://megatkani.by/" method="post"
-                                                          id="commerce-cart-add-to-cart-form-3304" accept-charset="UTF-8">
-                                                        <div><input type="hidden" name="product_id" value="3304"/>
-                                                            <input type="hidden" name="form_build_id"
-                                                                   value="form-kNFVj36Msj2Z-DE-xEuSw6RDMI_04sPB8g13EI13rQ0"/>
-                                                            <input type="hidden" name="form_id"
-                                                                   value="commerce_cart_add_to_cart_form_3304"/>
-                                                            <div id="edit-line-item-fields--3" class="form-wrapper"></div>
-                                                            <input type="hidden" name="quantity" value="1"/>
-                                                            <input type="submit" id="edit-submit--3"
-                                                                   value="Добавить в корзину" name="op"
-                                                                   class="form-submit"/></div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div class="product-list-item">
-
-                                                <div class="product-list-item__image"><a
-                                                        href="catalog/armani-shelk/shelk-armani-chayki-nezhnoe-oblako-6972.html">
-                                                    <img src="../static/sites/default/files/styles/thumbnail/public/shelk-armani-chayki-nezhnoe-oblako-3302-1062429701e27e.jpg?itok=okvKoE6a"
-                                                         alt="Шелк Армани чайки нежное облако">
-                                                </a></div>
-                                                <div class="product-list-item__title"><a
-                                                        href="catalog/armani-shelk/shelk-armani-chayki-nezhnoe-oblako-6972.html">Шелк
-                                                    Армани чайки нежное облако</a></div>
-                                                Цена: <span class="product-list-item__price">23.00 руб.</span>
-                                                <div class="product-list-item__add-to-cart">
-                                                    <form class="commerce-add-to-cart commerce-cart-add-to-cart-form-3302"
-                                                          autocomplete="off" action="https://megatkani.by/" method="post"
-                                                          id="commerce-cart-add-to-cart-form-3302" accept-charset="UTF-8">
-                                                        <div><input type="hidden" name="product_id" value="3302"/>
-                                                            <input type="hidden" name="form_build_id"
-                                                                   value="form-kVYz0K2c2KEGnWtb83d1QQ4xUsMbUCoHG7McI5Ybibo"/>
-                                                            <input type="hidden" name="form_id"
-                                                                   value="commerce_cart_add_to_cart_form_3302"/>
-                                                            <div id="edit-line-item-fields--4" class="form-wrapper"></div>
-                                                            <input type="hidden" name="quantity" value="1"/>
-                                                            <input type="submit" id="edit-submit--4"
-                                                                   value="Добавить в корзину" name="op"
-                                                                   class="form-submit"/></div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div class="product-list-item">
-
-                                                <div class="product-list-item__image"><a
-                                                        href="catalog/supersoft-shelk-armani-s-printom/supersoft-belyy-shtrihi-6968.html">
-                                                    <img src="../static/sites/default/files/styles/thumbnail/public/supersoft-belyy-shtrihi-3298-134864644362b2.jpg?itok=GtZ-7r3p"
-                                                         alt="Суперсофт белый штрихи">
-                                                </a></div>
-                                                <div class="product-list-item__title"><a
-                                                        href="catalog/supersoft-shelk-armani-s-printom/supersoft-belyy-shtrihi-6968.html">Суперсофт
-                                                    белый штрихи</a></div>
-                                                Цена: <span class="product-list-item__price">18.00 руб.</span>
-                                                <div class="product-list-item__add-to-cart">
-                                                    <form class="commerce-add-to-cart commerce-cart-add-to-cart-form-3298"
-                                                          autocomplete="off" action="https://megatkani.by/" method="post"
-                                                          id="commerce-cart-add-to-cart-form-3298" accept-charset="UTF-8">
-                                                        <div><input type="hidden" name="product_id" value="3298"/>
-                                                            <input type="hidden" name="form_build_id"
-                                                                   value="form-VXMer-Cv8SKNGwl6p7MLWUbMTsLM7q4FvDlnaJJfqYo"/>
-                                                            <input type="hidden" name="form_id"
-                                                                   value="commerce_cart_add_to_cart_form_3298"/>
-                                                            <div id="edit-line-item-fields--5" class="form-wrapper"></div>
-                                                            <input type="hidden" name="quantity" value="1"/>
-                                                            <input type="submit" id="edit-submit--5"
-                                                                   value="Добавить в корзину" name="op"
-                                                                   class="form-submit"/></div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div class="product-list-item">
-
-                                                <div class="product-list-item__image"><a
-                                                        href="catalog/plashchevka/na-sintepone/plashchevka-proshitaya-na-sintepone-leo-6958.html">
-                                                    <img src="../static/sites/default/files/styles/thumbnail/public/plashchevka-proshitaya-na-sintepone-leo-3287-8151110452e67.jpg?itok=1Gr7X3dL"
-                                                         alt="Плащевка прошитая на синтепоне Лео">
-                                                </a></div>
-                                                <div class="product-list-item__title"><a
-                                                        href="catalog/plashchevka/na-sintepone/plashchevka-proshitaya-na-sintepone-leo-6958.html">Плащевка
-                                                    прошитая на синтепоне Лео</a></div>
-                                                Цена: <span class="product-list-item__price">30.00 руб.</span>
-                                                <div class="product-list-item__add-to-cart">
-                                                    <form class="commerce-add-to-cart commerce-cart-add-to-cart-form-3287"
-                                                          autocomplete="off" action="https://megatkani.by/" method="post"
-                                                          id="commerce-cart-add-to-cart-form-3287" accept-charset="UTF-8">
-                                                        <div><input type="hidden" name="product_id" value="3287"/>
-                                                            <input type="hidden" name="form_build_id"
-                                                                   value="form-HYJdH4FjzV0hBiF94LXkLy4HUOgg341OMyB5mhQ1hPI"/>
-                                                            <input type="hidden" name="form_id"
-                                                                   value="commerce_cart_add_to_cart_form_3287"/>
-                                                            <div id="edit-line-item-fields--6" class="form-wrapper"></div>
-                                                            <input type="hidden" name="quantity" value="1"/>
-                                                            <input type="submit" id="edit-submit--6"
-                                                                   value="Добавить в корзину" name="op"
-                                                                   class="form-submit"/></div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div class="product-list-item">
-
-                                                <div class="product-list-item__image"><a
-                                                        href="catalog/kostyumnye-teplye-tkani/kostyumnaya-kletka-barberi-6928.html">
-                                                    <img src="../static/sites/default/files/styles/thumbnail/public/kostyumnaya-kletka-barberi-3257-19910326674575.jpg?itok=5Eb4KL1w"
-                                                         alt="Костюмная клетка барбери">
-                                                </a></div>
-                                                <div class="product-list-item__title"><a
-                                                        href="catalog/kostyumnye-teplye-tkani/kostyumnaya-kletka-barberi-6928.html">Костюмная
-                                                    клетка барбери</a></div>
-                                                Цена: <span class="product-list-item__price">28.00 руб.</span>
-                                                <div class="product-list-item__add-to-cart">
-                                                    <form class="commerce-add-to-cart commerce-cart-add-to-cart-form-3257"
-                                                          autocomplete="off" action="https://megatkani.by/" method="post"
-                                                          id="commerce-cart-add-to-cart-form-3257" accept-charset="UTF-8">
-                                                        <div><input type="hidden" name="product_id" value="3257"/>
-                                                            <input type="hidden" name="form_build_id"
-                                                                   value="form-R8cRu2-nWlNSe5Npo2GcHwA7PU_0ZQcSoBUQ46DopHI"/>
-                                                            <input type="hidden" name="form_id"
-                                                                   value="commerce_cart_add_to_cart_form_3257"/>
-                                                            <div id="edit-line-item-fields--7" class="form-wrapper"></div>
-                                                            <input type="hidden" name="quantity" value="1"/>
-                                                            <input type="submit" id="edit-submit--7"
-                                                                   value="Добавить в корзину" name="op"
-                                                                   class="form-submit"/></div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div class="product-list-item">
-
-                                                <div class="product-list-item__image"><a
-                                                        href="catalog/kozha/iskusstvennaya/kozha-serebro-2224-6894.html">
-                                                    <img src="../static/sites/default/files/styles/thumbnail/public/kozha-serebro-2224-3223-1769980093635c.jpg?itok=chLWtXsy"
-                                                         alt="Кожа серебро 2224">
-                                                </a></div>
-                                                <div class="product-list-item__title"><a
-                                                        href="catalog/kozha/iskusstvennaya/kozha-serebro-2224-6894.html">Кожа
-                                                    серебро 2224</a></div>
-                                                Цена: <span class="product-list-item__price">28.00 руб.</span>
-                                                <div class="product-list-item__add-to-cart">
-                                                    <form class="commerce-add-to-cart commerce-cart-add-to-cart-form-3223"
-                                                          autocomplete="off" action="https://megatkani.by/" method="post"
-                                                          id="commerce-cart-add-to-cart-form-3223" accept-charset="UTF-8">
-                                                        <div><input type="hidden" name="product_id" value="3223"/>
-                                                            <input type="hidden" name="form_build_id"
-                                                                   value="form-4i40V4lAkpyCxbJ1Tg-cx841org2cwP47_bQTd7amFY"/>
-                                                            <input type="hidden" name="form_id"
-                                                                   value="commerce_cart_add_to_cart_form_3223"/>
-                                                            <div id="edit-line-item-fields--8" class="form-wrapper"></div>
-                                                            <input type="hidden" name="quantity" value="1"/>
-                                                            <input type="submit" id="edit-submit--8"
-                                                                   value="Добавить в корзину" name="op"
-                                                                   class="form-submit"/></div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div class="product-list-item">
-
-                                                <div class="product-list-item__image"><a
-                                                        href="catalog/trikotazh/s-risunkom/trikotazh-kosichka-krupnaya-kobalt-6826.html">
-                                                    <img src="../static/sites/default/files/styles/thumbnail/public/trikotazh-kosichka-krupnaya-kobalt-3155-1395001268760.jpg?itok=eJG4xt10"
-                                                         alt="Трикотаж косичка крупная кобальт">
-                                                </a></div>
-                                                <div class="product-list-item__title"><a
-                                                        href="catalog/trikotazh/s-risunkom/trikotazh-kosichka-krupnaya-kobalt-6826.html">Трикотаж
-                                                    косичка крупная кобальт</a></div>
-                                                Цена: <span class="product-list-item__price">28.00 руб.</span>
-                                                <div class="product-list-item__add-to-cart">
-                                                    <form class="commerce-add-to-cart commerce-cart-add-to-cart-form-3155"
-                                                          autocomplete="off" action="https://megatkani.by/" method="post"
-                                                          id="commerce-cart-add-to-cart-form-3155" accept-charset="UTF-8">
-                                                        <div><input type="hidden" name="product_id" value="3155"/>
-                                                            <input type="hidden" name="form_build_id"
-                                                                   value="form-xj78Mw1VrYW0Hq2L3N4b6ZSzfNnxqz39bcx-7huniko"/>
-                                                            <input type="hidden" name="form_id"
-                                                                   value="commerce_cart_add_to_cart_form_3155"/>
-                                                            <div id="edit-line-item-fields--9" class="form-wrapper"></div>
-                                                            <input type="hidden" name="quantity" value="1"/>
-                                                            <input type="submit" id="edit-submit--9"
-                                                                   value="Добавить в корзину" name="op"
-                                                                   class="form-submit"/></div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                            <div class="product-list-item">
-
-                                                <div class="product-list-item__image"><a
-                                                        href="catalog/barhat/sinteticheskiy/payetki-na-barhate-veri-peri-6821.html">
-                                                    <img src="../static/sites/default/files/styles/thumbnail/public/payetki-na-barhate-veri-peri-3150-171204515487e9.jpg?itok=aOAYiiyR"
-                                                         alt="Пайетки на бархате  Veri Peri">
-                                                </a></div>
-                                                <div class="product-list-item__title"><a
-                                                        href="catalog/barhat/sinteticheskiy/payetki-na-barhate-veri-peri-6821.html">Пайетки
-                                                    на бархате Veri Peri</a></div>
-                                                Цена: <span class="product-list-item__price">28.00 руб.</span>
-                                                <div class="product-list-item__add-to-cart">
-                                                    <form class="commerce-add-to-cart commerce-cart-add-to-cart-form-3150"
-                                                          autocomplete="off" action="https://megatkani.by/" method="post"
-                                                          id="commerce-cart-add-to-cart-form-3150" accept-charset="UTF-8">
-                                                        <div><input type="hidden" name="product_id" value="3150"/>
-                                                            <input type="hidden" name="form_build_id"
-                                                                   value="form-VU-undJ4siVKjk46DScbBUncgWwNbRZUBrlqk6KEGM4"/>
-                                                            <input type="hidden" name="form_id"
-                                                                   value="commerce_cart_add_to_cart_form_3150"/>
-                                                            <div id="edit-line-item-fields--10" class="form-wrapper"></div>
-                                                            <input type="hidden" name="quantity" value="1"/>
-                                                            <input type="submit" id="edit-submit--10"
-                                                                   value="Добавить в корзину" name="op"
-                                                                   class="form-submit"/></div>
-                                                    </form>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
 
