@@ -1,5 +1,7 @@
-import psycopg2
-from flask import render_template, redirect, request, url_for, session, g, flash, abort
+import psycopg2.extras
+from flask import render_template, redirect, request, url_for, session, g, flash, abort, Response
+from PIL import Image
+from io import BytesIO
 from . import product_bp
 
 
@@ -18,11 +20,13 @@ def add_product():
         season = request.form['season']
         color = request.form['color']
         price = request.form['price']
+        image = request.files['image'].read()
 
         # Добавляем новый продукт в таблицу "product"
-        g.cursor.execute("INSERT INTO product (article, name, description, category, supplier, season, color, price)"
-                         "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                         (article, name, description, category, supplier, season, color, price))
+        g.cursor.execute(
+            "INSERT INTO product (article, name, description, category, supplier, season, color, price, image)"
+            "VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)",
+            (article, name, description, category, supplier, season, color, price, image))
 
         flash('Product added successfully')
         return redirect(url_for('product.admin_products'))
@@ -36,7 +40,11 @@ def admin_products():
     if 'admin_id' not in session:
         return redirect(url_for('auth.login'))
 
-    g.cursor.execute("SELECT * FROM product")
+    g.cursor.execute(
+        " SELECT p.article, p.name, p.description, c.category, s.supplier, p.season, p.color, p.price"
+        " FROM product p"
+        " LEFT JOIN category c ON p.category = c.id"
+        " LEFT JOIN supplier s ON p.supplier = s.id;")
     products = g.cursor.fetchall()
     return render_template('admin/admin_products.html', products=products)
 
@@ -73,10 +81,14 @@ def edit_product(product_id):
         season = request.form['season']
         color = request.form['color']
         price = request.form['price']
+        # image_file = request.files.get('image')
+        # image = image_file.read()
+        image = request.files['image'].read()
+
         with g.connect.cursor() as cursor:
             cursor.execute(
-                'UPDATE product SET article=%s, name=%s, description=%s, category=%s, supplier=%s, season=%s, color=%s, price=%s WHERE article=%s',
-                (article, name, description, category, supplier, season, color, price, product_id))
+                'UPDATE product SET article=%s, name=%s, description=%s, category=%s, supplier=%s, season=%s, color=%s, price=%s, image=%s WHERE article=%s',
+                (article, name, description, category, supplier, season, color, price, image, product_id))
 
         # Перенаправляем пользователя на страницу с товарами
         return redirect(url_for('product.admin_products'))
@@ -101,3 +113,24 @@ def delete_product(product_id):
         g.connect.rollback()
         flash('Ошибка удаления товара', 'error')
         return redirect(url_for('product.admin_products'))
+
+
+@product_bp.route('/image_prod/<int:product_id>')
+def get_image(product_id):
+    # Получение данных изображения продукта из базы данных
+    g.cursor.execute("SELECT image FROM product WHERE article=%s", (product_id,))
+    image = g.cursor.fetchone()[0]
+
+    # Открытие изображения с помощью PIL
+    img = Image.open(BytesIO(image))
+
+    # Изменение размера изображения
+    img = img.resize((250, 250))
+
+    # Конвертация изображения в формат JPEG
+    buffer = BytesIO()
+    img.save(buffer, format='JPEG')
+    image = buffer.getvalue()
+
+    # Отправка изображения в ответе
+    return Response(image, mimetype='image/jpeg')

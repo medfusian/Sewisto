@@ -1,4 +1,4 @@
-import psycopg2
+import psycopg2.extras
 from flask import render_template, redirect, request, url_for, session, g, flash, abort
 from . import user_bp
 

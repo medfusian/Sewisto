@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Каталог тканей
+Категории тканей
 {% endblock %}
 
 {% block mainwrapper %}
@@ -10,7 +10,7 @@
         <main id="main">
 
 
-            <h1 class="page-title">Каталог тканей</h1>
+            <h1 class="page-title">Категории тканей</h1>
             <div id="content-wrapper">
                 <div id="page-content">
                     <div class="region region-content">
@@ -18,22 +18,25 @@
 
 
                             <div class="block-content">
-                                <div class="view view-catalog-main view-id-catalog_main view-display-id-page_1 view-dom-id-0711da316e832b7c73a72ab5997374fc">
+                                <div class="view view-use view-id-use view-display-id-page view-dom-id-1616f945a3633d196cb692c2b9bed01f">
 
 
                                     <div class="view-content">
-                                        <div class="product-list grid grid-cols-2 grid-cols-md-3 grid-cols-lg-4 grid-cols-xl-5 grid-g-1 grid-g-xl-2">
+                                        <div class="product-list grid grid-cols-2 grid-cols-md-3 grid-cols-lg-5 grid-g-2">
 
-                                            {% for product in products %}
+                                            {% for category in categories %}
 
                                             <div class="product-list-item">
 
                                                 <div class="product-list-item__image"><a
-                                                        href=""><img typeof="foaf:Image"
-                                                                     src="{{ url_for('product.get_image', product_id=product[0]) }}"
-                                                                     alt="{{ product[1] }}"></a></div>
+                                                        href="{{ url_for('main.get_category', category_id=category[0]) }}">
+                                                    <img typeof="foaf:Image"
+                                                         src="{{ url_for('main.get_image', category_id=category[0]) }}"
+                                                         alt="{{ category[1] }}"</a>
+                                                </div>
                                                 <div class="product-list-item__title"><a
-                                                        href="">{{ product[1] }}</a></div>
+                                                        href="{{ url_for('main.get_category', category_id=category[0]) }}">
+                                                    {{ category[1] }}</a></div>
                                             </div>
 
                                             {% endfor %}
@@ -66,7 +69,7 @@
     "setHasJsCookie": 0,
     "ajaxPageState": {
         "theme": "megatkani",
-        "theme_token": "1hmhj4QbOsz33pBGH4IihfNu5wm_zetYuBdjHwNwBOE",
+        "theme_token": "rVG7QvGobfw5JNBVP73sv5v1vL9vA5j60jwhxzuZDHg",
         "jquery_version": "1.8",
         "js": {
             "sites\/all\/modules\/jquery_update\/replace\/jquery\/1.8\/jquery.min.js": 1,
@@ -123,7 +126,7 @@
         "file_public_path": "\/sites\/default\/files",
         "specificPagesDefaultValue": "admin*\nimagebrowser*\nimg_assist*\nimce*\nnode\/add\/*\nnode\/*\/edit\nprint\/*\nprintpdf\/*\nsystem\/ajax\nsystem\/ajax\/*"
     },
-    "better_exposed_filters": {"views": {"catalog_main": {"displays": {"page_1": {"filters": []}}}}},
+    "better_exposed_filters": {"views": {"use": {"displays": {"page": {"filters": []}}}}},
     "urlIsAjaxTrusted": {"\/search-results": true}
 });</script>
 {% endblock %}

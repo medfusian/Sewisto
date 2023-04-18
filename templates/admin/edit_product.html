@@ -3,7 +3,7 @@
 {% block content %}
 <h1>Edit Product</h1>
 
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
   <label for="article">Article</label>
   <input type="text" name="article" value="{{ product.article }}"><br><br>
   <label for="name">Name</label>
@@ -20,6 +20,8 @@
   <input type="text" name="color" value="{{ product.color }}"><br><br>
   <label for="price">Price</label>
   <input type="text" name="price" value="{{ product.price }}"><br><br>
+  <label for="image">Image:</label>
+  <input type="file" name="image" value=""><br><br>
   <input type="submit" value="Save">
 </form>
 {% endblock %}

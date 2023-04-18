@@ -2,9 +2,11 @@ import psycopg2
 import secrets
 from config import host, user, password, db_name
 from flask import Flask, request, g
+# from flask_images import Images
 from routes import admin_bp, product_bp, user_bp, main_bp, auth_bp
 
 app = Flask(__name__)
+# images = Images(app)
 app.secret_key = secrets.token_hex(16)
 dsn = f"dbname={db_name} user={user} password={password} host={host}"
 
@@ -17,6 +19,7 @@ app.register_blueprint(user_bp)
 
 @app.before_request
 def before_request():
+    """Открывает соединение с БД"""
     db = getattr(g, 'connect', None)
     if db is None and request.endpoint not in ['static']:
         g.connect = psycopg2.connect(dsn)

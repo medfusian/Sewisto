@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Отзывы о магазине
+{% endblock %}
+
+{% block mainwrapper %}
+    <div id="main-wrapper">
+        <div class="container">
+            <main id="main">
+
+
+                <h1 class="page-title">Отзывы о нашем магазине тканей</h1>
+                <div id="content-wrapper">
+                    <div id="page-content">
+                        <div class="region region-content">
+                            <div id="block-system-main" class="block block-system">
+
+
+                                <div class="block-content">
+                                    <article id="node-2398" class="node node-page " about="/feedback"
+                                             typeof="foaf:Document">
+
+                                        <span property="dc:title" content="Отзывы о нашем магазине тканей"
+                                              class="rdf-meta element-hidden"></span><span property="sioc:num_replies"
+                                                                                           content="2"
+                                                                                           datatype="xsd:integer"
+                                                                                           class="rdf-meta element-hidden"></span>
+
+                                        <div class="node-content clearfix">
+                                        </div>
+
+
+                                    </article>
+                                </div>
+
+                            </div> <!-- /.block -->
+                            <div id="block-views-comments-block" class="block block-views">
+
+                                <div class="block-title">Комментарии</div>
+
+                                <div class="block-content">
+<!--                                    <div class="view view-comments view-id-comments view-display-id-block view-dom-id-e33d0e81823759dc6c1aaa01fab3c024">-->
+
+
+                                        <div class="view-content">
+                                            <ul class="comment-list">
+
+                                                {% for feedback in feedbacks %}
+                                                    <li class="comment-list-item">
+                                                        <div class="comment-list-item__name">{{ feedback[1] }}</div>
+                                                        <div class="comment-list-item__date">{{ feedback[2] }}</div>
+                                                        <div class="comment-list-item__text">{{ feedback[3] }}</div>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </div>
+
+
+<!--                                    </div>-->
+                                </div>
+
+                            </div> <!-- /.block -->
+                            <div id="block-commentsblock-comment-form-block" class="block block-commentsblock">
+
+
+                                <div class="block-content">
+                                    <div class="comment-form-wrapper">
+                                        <div class="block-title">Добавить комментарий</div>
+                                        <form class="comment-form" action="{{ url_for('main.feedback') }}"
+                                              method="post" id="comment-form" accept-charset="UTF-8">
+                                            <div>
+                                                <div class="form-item form-type-textfield form-item-name">
+                                                    <label for="name">Ваше имя </label>
+                                                    <input type="text" id="name" name="name" value="" size="30"
+                                                           maxlength="60" class="form-text"/>
+                                                </div>
+                                                <div class="field-type-text-long field-name-comment-body field-widget-text-textarea form-wrapper"
+                                                     id="edit-comment-body">
+                                                    <div id="comment-body-add-more-wrapper">
+                                                        <div class="form-item form-type-textarea form-item-comment-body-und-0-value">
+                                                            <label for="text">Отзыв <span
+                                                                    class="form-required"
+                                                                    title="Это поле обязательно для заполнения.">*</span></label>
+<!--                                                            <input type="text" id="text" name="text" value="" size="30"-->
+<!--                                                           maxlength="60" class="text-full form-textarea required"/>-->
+                                                            <div class="form-textarea-wrapper resizable"><textarea
+                                                                    class="text-full form-textarea required"
+                                                                    id="text"
+                                                                    name="text" cols="60"
+                                                                    rows="5"></textarea></div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+<!--                                                <input type="hidden" name="form_build_id"-->
+<!--                                                       value="form-PSIqBWn1b2ctJoXYCt0ocX670AKbDH5zc4MKxi4SEkA"/>-->
+<!--                                                <input type="hidden" name="form_id" value="comment_node_page_form"/>-->
+<!--                                                <input type="hidden" name="honeypot_time"-->
+<!--                                                       value="1677745332|OZb2cdkAtvVfxxvyfK24xFCL2QnLAJvHKnP6ZzKVOQQ"/>-->
+                                                <div class="form-actions form-wrapper" id="edit-actions"><input
+                                                        type="submit" id="edit-submit" value="Отправить" name="op"
+                                                        class="form-submit"/></div>
+<!--                                                <div class="url-textfield">-->
+<!--                                                    <div class="form-item form-type-textfield form-item-url">-->
+<!--                                                        <label for="edit-url">Leave this field blank </label>-->
+<!--                                                        <input autocomplete="off" type="text" id="edit-url" name="url"-->
+<!--                                                               value="" size="20" maxlength="128" class="form-text"/>-->
+<!--                                                    </div>-->
+<!--                                                </div>-->
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+
+                            </div> <!-- /.block -->
+                        </div>
+                        <!-- /.region -->
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scrips %}
+    <script src="../../static/sites/default/files/js/js_EPDNC_ZSfzABh2HWCzZfW6FLYt-HNw8g_cS3u_OtyC0.js"></script>
+    <script src="../../static/sites/default/files/js/js_A5FIZKAzHMFJ0IpOpKmWF3iKiXHuqT0L9XYtpOZSZs8.js"></script>
+    <script src="../../static/sites/default/files/js/js_YYPAK6sRREsp8LbKkho1h2cusuBDVmoN-nwNEoJMV0Y.js"></script>
+    <script src="../../static/sites/default/files/js/js_QoQHYQx8p3Q3GdL1IoNzSJ1ZZuxJKipK7Nq0cmr5Vg4.js"></script>
+    <script>jQuery.extend(Drupal.settings, {
+        "basePath": "\/",
+        "pathPrefix": "",
+        "setHasJsCookie": 0,
+        "ajaxPageState": {
+            "theme": "megatkani",
+            "theme_token": "1YiswU89TMlxHByh2IzDVycp2t5aqw8V7e-rJM3bAkY",
+            "jquery_version": "1.8",
+            "js": {
+                "sites\/all\/modules\/jquery_update\/replace\/jquery\/1.8\/jquery.min.js": 1,
+                "misc\/jquery-extend-3.4.0.js": 1,
+                "misc\/jquery-html-prefilter-3.5.0-backport.js": 1,
+                "misc\/jquery.once.js": 1,
+                "misc\/drupal.js": 1,
+                "misc\/ajax.js": 1,
+                "sites\/all\/modules\/jquery_update\/js\/jquery_update.js": 1,
+                "misc\/progress.js": 1,
+                "sites\/all\/modules\/dc_ajax_add_cart\/js\/dc_ajax_add_cart_html.js": 1,
+                "public:\/\/languages\/ru_JC_HOuUPoZwI0-e50sOVqtDiBnRIrBxzP0flyYFtioY.js": 1,
+                "sites\/all\/libraries\/colorbox\/jquery.colorbox-min.js": 1,
+                "sites\/all\/modules\/colorbox\/js\/colorbox.js": 1,
+                "misc\/textarea.js": 1,
+                "sites\/all\/themes\/megatkani\/js\/jquery.maskedinput.min.js": 1,
+                "sites\/all\/themes\/megatkani\/js\/main.js": 1,
+                "sites\/all\/themes\/megatkani\/js\/gsap.min.js": 1,
+                "sites\/all\/themes\/megatkani\/js\/mobilepanel.js": 1,
+                "sites\/all\/themes\/megatkani\/js\/smoothscroll.js": 1
+            },
+            "css": {
+                "modules\/system\/system.base.css": 1,
+                "modules\/system\/system.menus.css": 1,
+                "modules\/system\/system.messages.css": 1,
+                "modules\/system\/system.theme.css": 1,
+                "sites\/all\/modules\/dc_ajax_add_cart\/css\/dc_ajax_add_cart.css": 1,
+                "modules\/comment\/comment.css": 1,
+                "modules\/field\/theme\/field.css": 1,
+                "modules\/node\/node.css": 1,
+                "modules\/search\/search.css": 1,
+                "modules\/user\/user.css": 1,
+                "sites\/all\/modules\/youtube\/css\/youtube.css": 1,
+                "sites\/all\/modules\/views\/css\/views.css": 1,
+                "sites\/all\/modules\/ckeditor\/css\/ckeditor.css": 1,
+                "sites\/all\/modules\/ctools\/css\/ctools.css": 1,
+                "public:\/\/honeypot\/honeypot.css": 1,
+                "sites\/all\/themes\/megatkani\/css\/main.css": 1,
+                "sites\/all\/themes\/megatkani\/css\/grid.css": 1,
+                "sites\/all\/themes\/megatkani\/css\/views.css": 1,
+                "sites\/all\/themes\/megatkani\/css\/mobilepanel.css": 1,
+                "sites\/all\/themes\/megatkani\/css\/responsive.css": 1
+            }
+        },
+        "colorbox": {
+            "opacity": "0.85",
+            "current": "{current} of {total}",
+            "previous": "\u00ab Prev",
+            "next": "Next \u00bb",
+            "close": "Close",
+            "maxWidth": "98%",
+            "maxHeight": "98%",
+            "fixed": true,
+            "mobiledetect": false,
+            "mobiledevicewidth": "480px",
+            "file_public_path": "\/sites\/default\/files",
+            "specificPagesDefaultValue": "admin*\nimagebrowser*\nimg_assist*\nimce*\nnode\/add\/*\nnode\/*\/edit\nprint\/*\nprintpdf\/*\nsystem\/ajax\nsystem\/ajax\/*"
+        },
+        "urlIsAjaxTrusted": {"\/search-results": true, "\/comment\/reply\/2398": true},
+        "better_exposed_filters": {"views": {"comments": {"displays": {"block": {"filters": []}}}}}
+    });</script>
+{% endblock %}
