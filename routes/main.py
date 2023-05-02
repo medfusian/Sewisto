@@ -1,4 +1,4 @@
-from flask import render_template, session, g, request, redirect, url_for, Response
+from flask import render_template, session, g, request, redirect, url_for, Response, flash
 from PIL import Image
 from io import BytesIO
 from . import main_bp
@@ -75,6 +75,28 @@ def feedback():
     g.cursor.execute("SELECT * FROM feedback")
     feedbacks = g.cursor.fetchall()
     return render_template('info/feedback.html', feedbacks=feedbacks)
+
+
+@main_bp.route('/cart')
+def cart():
+    g.cursor.execute("SELECT * FROM cart")
+    cart = g.cursor.fetchall()
+    return render_template('cart.html', cart=cart)
+
+
+@main_bp.route('/add_to_cart/<int:product_id>', methods=['POST'])
+def add_to_cart(product_id):
+    g.cursor.execute("SELECT * FROM product WHERE article=%s", (product_id,))
+    products = g.cursor.fetchall()
+    if not products:
+        flash('Товар не найден', 'error')
+        return redirect(url_for('main.index'))
+
+    g.cursor.execute("INSERT INTO cart (article, name, price, count, summary) VALUES (%s, %s, %s, %s, %s)",
+                     (products[0], products[1], products[7], 1, products[7]))
+
+    flash(f'Товар "{products[1]}" добавлен в корзину', 'success')
+    return redirect(url_for('cart'))
 
 
 @main_bp.route('/image_cat/<int:category_id>')
