@@ -180,17 +180,11 @@
                                                 Цена: <span class="product-list-item__price">{{ product[7] }}$</span>
                                                 <div class="product-list-item__add-to-cart">
                                                     <form class="commerce-add-to-cart commerce-cart-add-to-cart-form-3310"
-                                                          autocomplete="off" action="https://megatkani.by/" method="post"
+                                                          action="/add_to_cart/{{ product[0] }}"
+                                                          method="post"
                                                           id="commerce-cart-add-to-cart-form-3310" accept-charset="UTF-8">
-                                                        <div><input type="hidden" name="product_id" value="3310"/>
-                                                            <input type="hidden" name="form_build_id"
-                                                                   value="form-k_hOxEjU7AEiX3OnNqqcky76hC83RZCvz6n7WNy55GE"/>
-                                                            <input type="hidden" name="form_id"
-                                                                   value="commerce_cart_add_to_cart_form_3310"/>
-                                                            <div id="edit-line-item-fields" class="form-wrapper"></div>
-                                                            <input type="hidden" name="quantity" value="1"/>
                                                             <input type="submit" id="edit-submit" value="Добавить в корзину"
-                                                                   name="op" class="form-submit"/></div>
+                                                                   class="form-submit"/>
                                                     </form>
                                                 </div>
                                             </div>

@@ -81,8 +81,6 @@ def edit_product(product_id):
         season = request.form['season']
         color = request.form['color']
         price = request.form['price']
-        # image_file = request.files.get('image')
-        # image = image_file.read()
         image = request.files['image'].read()
 
         with g.connect.cursor() as cursor:

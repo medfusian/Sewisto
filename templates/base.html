@@ -83,68 +83,7 @@
             <!-- /.region -->
         </div>
     </div>
-    <div id="header-second">
-        <div id="header-second-inner" class="container">
-            <div class="region region-header-second-left">
-                <div id="block-block-12" class="block block-block">
-
-
-                    <div class="block-content">
-                        <a href="/" class="site-logo">Sewisto</a></div>
-
-                </div> <!-- /.block -->
-            </div>
-            <!-- /.region -->
-            <div class="region region-header-second-middle">
-                <div id="block-system-main-menu" class="block block-system block-menu">
-
-                    {% include 'navbar.html' %}
-
-                </div> <!-- /.block -->
-            </div>
-            <!-- /.region -->
-            <div class="region region-header-second-right">
-                <div id="block-block-29" class="block block-block">
-
-
-                    <div class="block-content">
-                        <nav class="navigation">
-                            <ul class="menu user-menu">
-                                <li>
-                                    {% if current_user or admin %}
-                                    {% if admin %}
-                                    <a href="{{ url_for('admin.admin_panel') }}">Admin panel</a>
-                                    {% elif user %}
-                                    <span>{{ user }}</span>
-                                    {% else %}
-                                    <span>{{ current_user }}</span>
-                                    {% endif %}
-                                    {% else %}
-                                    <a href="{{ url_for('auth.login') }}">Войти</a>
-                                    {% endif %}
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
-
-                </div> <!-- /.block -->
-                <div id="block-dc-ajax-add-cart-ajax-shopping-cart-teaser" class="block block-dc-ajax-add-cart">
-
-
-                    <div class="block-content">
-                        <div class="ajax-shopping-cart-teaser">
-                            <div class="cart-empty">
-                                Корзина пуста
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div> <!-- /.block -->
-            </div>
-            <!-- /.region -->
-        </div>
-    </div>
+    {% include 'navbar.html' %}
 </header>
 
 {% block video %}{% endblock %}

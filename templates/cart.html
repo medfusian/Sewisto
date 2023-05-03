@@ -5,112 +5,117 @@
 {% endblock %}
 
 {% block mainwrapper %}
-    <div id="main-wrapper">
-        <div class="container">
-            <main id="main">
+<div id="main-wrapper">
+    <div class="container">
+        <main id="main">
 
 
-                <h1 class="page-title">Корзина</h1>
-                <div id="content-wrapper">
-                    <div id="page-content">
-                        <div class="region region-content">
-                            <div id="block-system-main" class="block block-system">
+            <h1 class="page-title">Корзина</h1>
+            <div id="content-wrapper">
+                <div id="page-content">
+                    <div class="region region-content">
+                        <div id="block-system-main" class="block block-system">
 
 
-                                <div class="block-content">
-                                    <div class="view view-commerce-cart-form view-id-commerce_cart_form view-display-id-default view-dom-id-fb588f452f4d8c71d621c24c660df80a">
+                            <div class="block-content">
+                                <div class="view view-commerce-cart-form view-id-commerce_cart_form view-display-id-default view-dom-id-fb588f452f4d8c71d621c24c660df80a">
 
+{% block cart %}
+                                    <div class="view-content">
+                                        <div class="commerce-line-item-views-form">
+                                            <form method="POST" enctype="multipart/form-data">
+                                                <div>
+                                                    <table class="views-table cols-6">
+                                                        <thead>
+                                                        <tr>
+                                                            <th class="views-field views-field-field-product-img"
+                                                                scope="col">
+                                                            </th>
+                                                            <th class="views-field views-field-line-item-title"
+                                                                scope="col">
+                                                                Товар
+                                                            </th>
+                                                            <th class="views-field views-field-commerce-unit-price"
+                                                                scope="col">
+                                                                Цена
+                                                            </th>
+                                                            <th class="views-field views-field-edit-quantity"
+                                                                scope="col">
+                                                                Количество
+                                                            </th>
+                                                            <th class="views-field views-field-edit-delete" scope="col">
+                                                                Итого
+                                                            </th>
+                                                            <th class="views-field views-field-commerce-total"
+                                                                scope="col">
 
-                                        <div class="view-content">
-                                            <div class="commerce-line-item-views-form">
-                                                <form action="/cart" method="post"
-                                                      id="views-form-commerce-cart-form-default" accept-charset="UTF-8">
-                                                    <div><input type="hidden" name="form_build_id"
-                                                                value="form-jOzNNnHgOm5ikVH5T1WlJeUH6_tzg2rFT2DAkTpzncE"/>
-                                                        <input type="hidden" name="form_id"
-                                                               value="views_form_commerce_cart_form_default"/>
-                                                        <table class="views-table cols-6">
-                                                            <thead>
-                                                            <tr>
-                                                                <th class="views-field views-field-field-product-img"
-                                                                    scope="col">
-                                                                </th>
-                                                                <th class="views-field views-field-line-item-title"
-                                                                    scope="col">
-                                                                </th>
-                                                                <th class="views-field views-field-commerce-unit-price"
-                                                                    scope="col">
-                                                                    Цена
-                                                                </th>
-                                                                <th class="views-field views-field-edit-quantity"
-                                                                    scope="col">
-                                                                    Количество
-                                                                </th>
-                                                                <th class="views-field views-field-edit-delete" scope="col">
-                                                                </th>
-                                                                <th class="views-field views-field-commerce-total"
-                                                                    scope="col">
-                                                                    Итого
-                                                                </th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            <tr class="odd views-row-first views-row-last">
-                                                                <td class="views-field views-field-field-product-img">
-                                                                    <a href=""><img
-                                                                            typeof="foaf:Image"
-                                                                            src="{{ url_for('product.get_image', product_id=cart[1]) }}"
-                                                                            width="100" height="100" alt=""/></a></td>
-                                                                <td class="views-field views-field-line-item-title">
-                                                                    <a href="">{{ cart[2] }}</a></td>
-                                                                <td class="views-field views-field-commerce-unit-price price">
-                                                                    {{ cart[3] }}
-                                                                </td>
-                                                                <td class="views-field views-field-edit-quantity">
-                                                                    <div class="form-item form-type-textfield form-item-edit-quantity-0">
-                                                                        <input title="Количество" type="text"
-                                                                               id="edit-edit-quantity-0"
-                                                                               name="edit_quantity[0]" value="1" size="4"
-                                                                               maxlength="6" class="form-text"/>
-                                                                    </div>
-                                                                </td>
-                                                                <td class="views-field views-field-edit-delete">
-                                                                    <input class="delete-line-item form-submit"
-                                                                           type="submit" id="edit-edit-delete-0"
-                                                                           value="Удалить" name="delete-line-item-0"/></td>
-                                                                <td class="views-field views-field-commerce-total price">
+                                                            </th>
+                                                        </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                        {% set total_sum = 0 %}
+                                                        {% for product in cart %}
+                                                        {% set total_sum = total_sum + 1 %}
+                                                        <tr class="odd views-row-first views-row-last">
+                                                            <td class="views-field views-field-field-product-img">
+                                                                <a href=""><img
+                                                                        typeof="foaf:Image"
+                                                                        src="{{ url_for('product.get_image', product_id=product[1]) }}"
+                                                                        width="100" height="100" alt=""/>
+                                                                </a>
+                                                            </td>
+                                                            <td class="views-field views-field-line-item-title">
+                                                                <a>{{ product[2] }}</a>
+                                                            </td>
+                                                            <td class="views-field views-field-commerce-unit-price price">
+                                                                <a>{{ product[3] }}</a>
+                                                            </td>
+                                                            <td class="views-field views-field-edit-quantity">
+                                                                <a>{{ product[4] }}</a>
+                                                            </td>
+                                                            <td class="views-field views-field-commerce-total price">
+                                                                <a>{{ product[5] }}</a>
+                                                            </td>
+                                                            <td class="views-field views-field-edit-delete">
+                                                                <a href="/edit_cart/{{ product[0] }}" class="form-submit">Редактировать</a></td>
 
-                                                                </td>
-                                                            </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        <div class="line-item-summary">
-                                                            <div class="line-item-total">
-                                                                <span class="line-item-total-label">Итого:</span> <span
-                                                                    class="line-item-total-raw">18.00 руб.</span>
-                                                            </div>
+                                                        </tr>
+                                                        {% endfor %}
+                                                        </tbody>
+                                                    </table>
+
+                                                    <div class="line-item-summary">
+                                                        <div class="line-item-total">
+                                                                <span
+                                                                        class="line-item-total-label">Итого:
+                                                                </span>
+                                                            <span
+                                                                    class="line-item-total-raw">
+                                                                    {{ total_sum }} руб.
+                                                                </span>
                                                         </div>
-                                                        <div class="form-actions commerce-line-item-actions form-wrapper"
-                                                             id="edit-actions"><input type="submit" id="edit-submit"
-                                                                                      value="Обновить корзину" name="op"
-                                                                                      class="form-submit"/><input
-                                                                type="submit" id="edit-checkout" value="Оформить заказ"
-                                                                name="op" class="form-submit"/></div>
                                                     </div>
-                                                </form>
-                                            </div>
+                                                    <div class="form-actions commerce-line-item-actions form-wrapper"
+                                                         id="edit-actions">
+                                                        <input
+                                                                type="submit" id="edit-checkout" value="Оформить заказ"
+                                                                name="op" class="form-submit"/>
+                                                    </div>
+                                                </div>
+                                            </form>
                                         </div>
-
-
                                     </div>
-                                </div>
+{% endblock %}
 
-                            </div> <!-- /.block -->
-                        </div>
-                        <!-- /.region -->
+                                </div>
+                            </div>
+
+                        </div> <!-- /.block -->
                     </div>
+                    <!-- /.region -->
                 </div>
-            </main>
-        </div>
+            </div>
+        </main>
     </div>
+</div>
 {% endblock %}
