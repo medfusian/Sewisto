@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-Корзина
+Заказы
 {% endblock %}
 
 {% block mainwrapper %}
@@ -10,7 +10,7 @@
         <main id="main">
 
 
-            <h1 class="page-title">Корзина</h1>
+            <h1 class="page-title">Заказы</h1>
             <div id="content-wrapper">
                 <div id="page-content">
                     <div class="region region-content">
@@ -20,7 +20,6 @@
                             <div class="block-content">
                                 <div class="view view-commerce-cart-form view-id-commerce_cart_form view-display-id-default view-dom-id-fb588f452f4d8c71d621c24c660df80a">
 
-                                    {% block cart %}
                                     <div class="view-content">
                                         <div class="commerce-line-item-views-form">
                                             <form method="POST" enctype="multipart/form-data">
@@ -28,57 +27,33 @@
                                                     <table class="views-table cols-6">
                                                         <thead>
                                                         <tr>
-                                                            <th class="views-field views-field-field-product-img"
-                                                                scope="col">
-                                                            </th>
                                                             <th class="views-field views-field-line-item-title"
                                                                 scope="col">
-                                                                Товар
+                                                                Заказ
                                                             </th>
                                                             <th class="views-field views-field-commerce-unit-price"
                                                                 scope="col">
-                                                                Цена
+                                                                Дата
                                                             </th>
                                                             <th class="views-field views-field-edit-quantity"
                                                                 scope="col">
-                                                                Количество
-                                                            </th>
-                                                            <th class="views-field views-field-edit-delete" scope="col">
-                                                                Итого
-                                                            </th>
-                                                            <th class="views-field views-field-commerce-total"
-                                                                scope="col">
-
+                                                                Итоговая стоимость
                                                             </th>
                                                         </tr>
                                                         </thead>
                                                         <tbody>
 
-                                                        {% for product in cart %}
+                                                        {% for order in orders %}
 
                                                         <tr class="odd views-row-first views-row-last">
-                                                            <td class="views-field views-field-field-product-img">
-                                                                <a href=""><img
-                                                                        typeof="foaf:Image"
-                                                                        src="{{ url_for('product.get_image', product_id=product[1]) }}"
-                                                                        width="100" height="100" alt=""/>
-                                                                </a>
+                                                            <td class="views-field views-field-line-item-title">
+                                                                <a>{{ order[0] }}</a>
                                                             </td>
                                                             <td class="views-field views-field-line-item-title">
-                                                                <a>{{ product[2] }}</a>
-                                                            </td>
-                                                            <td class="views-field views-field-commerce-unit-price price">
-                                                                <a>{{ product[3] }}</a>
-                                                            </td>
-                                                            <td class="views-field views-field-edit-quantity">
-                                                                <a>{{ product[4] }}</a>
-                                                            </td>
+                                                                <a>{{ order[1] }}</a>
                                                             <td class="views-field views-field-commerce-total price">
-                                                                <a>{{ product[5] }}</a>
+                                                                <a>{{ order[2] }}</a>
                                                             </td>
-                                                            <td class="views-field views-field-edit-delete">
-                                                                <a href="/edit_cart/{{ product[0] }}"
-                                                                   class="form-submit">Редактировать</a></td>
 
                                                         </tr>
                                                         {% endfor %}
@@ -88,7 +63,7 @@
                                                     <div class="line-item-summary">
                                                         <div class="line-item-total">
                                                                 <span
-                                                                        class="line-item-total-label">Итого:
+                                                                        class="line-item-total-label">Общая стоимость:
                                                                 </span>
                                                             <span
                                                                     class="line-item-total-raw">
@@ -96,17 +71,11 @@
                                                                 </span>
                                                         </div>
                                                     </div>
-                                                    <div class="form-actions commerce-line-item-actions form-wrapper"
-                                                         id="edit-actions">
-                                                        <a href="/create_order/{{ user_id }}" class="form-submit">
-                                                            Оформить заказ
-                                                        </a>
-                                                    </div>
+
                                                 </div>
                                             </form>
                                         </div>
                                     </div>
-                                    {% endblock %}
 
                                 </div>
                             </div>

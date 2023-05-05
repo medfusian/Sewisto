@@ -50,6 +50,14 @@ def category():
     return render_template('category.html', categories=categories)
 
 
+@main_bp.route('/search', methods=['GET'])
+def search():
+    name = request.args.get('keys')
+    g.cursor.execute("SELECT * FROM product WHERE name=%s", (name,))
+    products = g.cursor.fetchall()
+    return render_template('catalog.html', products=products)
+
+
 @main_bp.route('/delivery')
 def delivery():
     return render_template('info/delivery.html')
