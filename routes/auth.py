@@ -33,8 +33,35 @@ def login():
     return render_template('auth/login.html')
 
 
-@auth_bp.route('/password')
+@auth_bp.route('/register', methods=['GET', 'POST'])
 def password():
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['pass']
+        login = request.form['name']
+
+        # Проверяем, что email и пароль соответствуют пользователю в таблице "user"
+        g.cursor.execute("SELECT * FROM public.user WHERE email = %s AND password = %s", (email, password))
+        user = g.cursor.fetchone()
+
+        if user:
+            # Устанавливаем переменную сессии "user_id" в значение user.id
+            session['user_id'] = user[0]
+            flash('Logged in successfully')
+            return redirect(url_for('main.index'))
+        else:
+            g.cursor.execute("INSERT INTO public.user (email, password, login) "
+                             "VALUES (%s, %s, %s)", (email, password, login))
+
+            # Проверяем, что email и пароль соответствуют пользователю в таблице "user"
+            g.cursor.execute("SELECT * FROM public.user WHERE email = %s AND password = %s", (email, password))
+            user = g.cursor.fetchone()
+
+            # Устанавливаем переменную сессии "user_id" в значение user.id
+            session['user_id'] = user[0]
+            flash('Logged in successfully')
+            return redirect(url_for('main.index'))
+
     return render_template('auth/password.html')
 
 
