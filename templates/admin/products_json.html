@@ -1,0 +1,10 @@
+{% extends 'admin/baseadmin.html' %}
+
+{% block li %}
+<li><a href="{{ url_for('admin.admin_panel') }}">Admin Panel</a></li>
+{% endblock %}
+
+{% block content %}
+    <h1>Json</h1>
+    <p><a>{{ data }}</a></p>
+{% endblock %}

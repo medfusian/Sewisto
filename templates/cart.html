@@ -37,11 +37,13 @@
                                                             </th>
                                                             <th class="views-field views-field-commerce-unit-price"
                                                                 scope="col">
-                                                                Цена
+                                                                 <a href="{{ url_for('cart.sort_price') }}"
+                                                                   class="">Цена</a>
                                                             </th>
                                                             <th class="views-field views-field-edit-quantity"
                                                                 scope="col">
-                                                                Количество
+                                                                <a href="{{ url_for('cart.sort_count') }}"
+                                                                   class="">Количество</a>
                                                             </th>
                                                             <th class="views-field views-field-edit-delete" scope="col">
                                                                 Итого

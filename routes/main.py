@@ -38,7 +38,7 @@ def about():
 
 @main_bp.route('/catalog')
 def catalog():
-    g.cursor.execute("SELECT article, name FROM product;")
+    g.cursor.execute("SELECT article, name, price FROM product;")
     products = g.cursor.fetchall()
     return render_template('catalog.html', products=products)
 

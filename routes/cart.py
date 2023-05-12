@@ -1,5 +1,9 @@
 import psycopg2.extras
-from flask import render_template, redirect, request, url_for, session, g, flash, abort
+from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
+from matplotlib.figure import Figure
+from openpyxl import Workbook
+from io import BytesIO
+from flask import render_template, redirect, request, url_for, session, g, flash, abort, send_file, Response
 from . import cart_bp
 
 
@@ -37,7 +41,6 @@ def cart():
     return render_template('cart.html', cart=cart, total_sum=total_sum, user_id=session['user_id'])
 
 
-
 @cart_bp.route('/add_to_cart/<int:product_id>', methods=['POST'])
 def add_to_cart(product_id):
     # Проверяем, что пользователь аутентифицирован
@@ -56,7 +59,7 @@ def add_to_cart(product_id):
 
     for c in cart:
         if c[1] == product[0]:
-            if c[6] == session['user_id']:
+            if c[6] == session['user_id'] and c[7] is None:
                 is_on_cart = True
                 cart_id = c[0]
 
@@ -140,3 +143,115 @@ def orders():
         total_sum += order[2]
 
     return render_template('orders.html', orders=orders, total_sum=total_sum)
+
+
+@cart_bp.route('/admin/orders/')
+def admin_orders():
+    # Проверяем, что пользователь аутентифицирован как администратор
+    if 'admin_id' not in session:
+        return redirect(url_for('auth.login'))
+    g.cursor.execute("SELECT * FROM public.order")
+    orders = g.cursor.fetchall()
+    return render_template('admin/admin_orders.html', orders=orders)
+
+
+@cart_bp.route('/cart/sort_price')
+def sort_price():
+    g.cursor.execute("SELECT * FROM cart WHERE user_id=%s AND order_id IS NULL ORDER BY price DESC",
+                     (session['user_id'],))
+    cart = g.cursor.fetchall()
+
+    total_sum = 0
+    for c in cart:
+        total_sum += c[5]
+
+    return render_template('cart.html', cart=cart, total_sum=total_sum, user_id=session['user_id'])
+
+
+@cart_bp.route('/cart/sort_count')
+def sort_count():
+    g.cursor.execute("SELECT * FROM cart WHERE user_id=%s AND order_id IS NULL ORDER BY count DESC",
+                     (session['user_id'],))
+    cart = g.cursor.fetchall()
+
+    total_sum = 0
+    for c in cart:
+        total_sum += c[5]
+
+    return render_template('cart.html', cart=cart, total_sum=total_sum, user_id=session['user_id'])
+
+
+@cart_bp.route('/admin/order_report')
+def order_report():
+    # Проверяем, что пользователь аутентифицирован как администратор
+    if 'admin_id' not in session:
+        return redirect(url_for('auth.login'))
+
+    workbook = Workbook()
+    worksheet = workbook.active
+    worksheet.title = 'Отчет по заказам'
+
+    g.cursor.execute(
+        "SELECT o.id, o.user_id, CAST(o.order_date as varchar(19)), SUM(c.summary) AS total_summary FROM cart c "
+        "JOIN public.order o on o.id = c.order_id "
+        "GROUP BY o.id")
+    orders = g.cursor.fetchall()
+
+    worksheet.cell(row=1, column=1, value='ID')
+    worksheet.cell(row=1, column=2, value='Пользователь')
+    worksheet.cell(row=1, column=3, value='Дата')
+    worksheet.cell(row=1, column=4, value='Сумма')
+
+    for row_idx, row_data in enumerate(orders, start=2):
+        worksheet.cell(row=row_idx, column=1, value=row_data[0])
+        worksheet.cell(row=row_idx, column=2, value=row_data[1])
+        worksheet.cell(row=row_idx, column=3, value=row_data[2])
+        worksheet.cell(row=row_idx, column=4, value=row_data[3])
+
+    workbook.save('Отчет по заказам.xlsx')
+
+    return redirect(url_for('admin.admin_panel'))
+
+
+@cart_bp.route('/admin/order_analytics')
+def order_analytics():
+    # Проверяем, что пользователь аутентифицирован как администратор
+    if 'admin_id' not in session:
+        return redirect(url_for('auth.login'))
+
+    # выполнить запрос к базе данных
+    g.cursor.execute("SELECT to_char(order_date, 'YYYY - MM') AS month, COUNT(*) AS count "
+                     "FROM public.order GROUP BY month;")
+    results = g.cursor.fetchall()
+    print(results)
+
+    # разбить результаты на списки месяцев и количества заказов
+    months = [r[0] for r in results]
+    counts = [r[1] for r in results]
+
+    print(months)
+    print(counts)
+
+    # построить график
+    fig = Figure()
+    axis = fig.add_subplot(1, 1, 1)
+    axis.plot(months, counts)
+    axis.set_xlabel('Month')
+    axis.set_ylabel('Number of orders')
+    axis.set_title('Orders by Month')
+    axis.set_ylim([0, 10])  # ограничить ось y до 10 единиц
+
+    # создать объект canvas для отображения графика
+    canvas = FigureCanvas(fig)
+
+    # создать объект для хранения изображения графика в памяти
+    output = BytesIO()
+    canvas.print_png(output)
+
+    # создать объект Response с содержимым изображения и соответствующим заголовком
+    response = Response(output.getvalue(), mimetype='image/png')
+    response.headers['Content-Disposition'] = 'attachment; filename=orders_by_month.png'
+
+    # вернуть объект Response, который будет отображен в новой вкладке браузера
+    return response
+

@@ -1,4 +1,5 @@
 import psycopg2.extras
+import json
 from flask import render_template, redirect, request, url_for, session, g, flash, abort, Response
 from PIL import Image
 from io import BytesIO
@@ -132,3 +133,74 @@ def get_image(product_id):
 
     # Отправка изображения в ответе
     return Response(image, mimetype='image/jpeg')
+
+
+@product_bp.route('/admin/products/json_read')
+def products_json_read():
+    # Проверяем, что пользователь аутентифицирован как администратор
+    if 'admin_id' not in session:
+        return redirect(url_for('auth.login'))
+
+    # читаем данные из выбранного файла в формате JSON
+    with open("products.json", 'r') as file:
+        data = json.load(file)
+
+    g.cursor.execute("DROP TABLE IF EXISTS product_json")
+    g.cursor.execute("CREATE TABLE product_json "
+                     "(article SERIAL PRIMARY KEY, "
+                     "name VARCHAR(255) NOT NULL, "
+                     "description TEXT, "
+                     "category INT, "
+                     "supplier INT, "
+                     "season VARCHAR(20), "
+                     "color VARCHAR(60), "
+                     "price NUMERIC(10, 2) NOT NULL)")
+
+    for product in data:
+        article = product['article']
+        name = product['name']
+        description = product['description']
+        category = product['category']
+        supplier = product['supplier']
+        season = product['season']
+        color = product['color']
+        price = product['price']
+
+        g.cursor.execute("INSERT INTO product_json (article, name, description, category, supplier, season, color, price) "
+                         "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                         (article, name, description, category, supplier, season, color, price))
+
+    # выводим данные на экран
+    return render_template('admin/products_json.html', data=data)
+
+
+@product_bp.route('/admin/products/json_write')
+def products_json_write():
+    # Проверяем, что пользователь аутентифицирован как администратор
+    if 'admin_id' not in session:
+        return redirect(url_for('auth.login'))
+
+    # Получаем данные из базы данных
+    g.cursor.execute("SELECT * FROM product")
+    data = g.cursor.fetchall()
+
+    # Создаем список словарей, содержащих данные
+    products = []
+    for row in data:
+        product = {
+            "article": row[0],
+            "name": row[1],
+            "description": row[2],
+            "category": row[3],
+            "supplier": row[4],
+            "season": row[5],
+            "color": row[6],
+            "price": float(row[7])
+        }
+        products.append(product)
+
+    # записываем данные в новый файл в формате JSON
+    with open("products.json", 'w') as file:
+        json.dump(products, file)
+
+    return redirect(url_for('product.admin_products'))
